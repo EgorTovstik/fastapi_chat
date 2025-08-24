@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bl Chat</title>
+  <link rel="icon" href="/static/images/favicon.png" type="image/x-icon" />
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+<!-- Модальные окна -->
+<div class="overlay hidden">
+    <!-- Авторизация -->
+    <div id="login">
+        <input type="text" id="login-username" placeholder="Имя пользователя">
+        <input type="password" id="login-password" placeholder="Пароль">
+        <div id="login-error" class="error"></div>
+        <button id="login-btn">Войти</button>
+        <button id="register-btn">Регистрация</button>
+    </div>
+
+    <div id="new-chat" class="modal hidden">
+        <h3>Создать новый чат</h3>
+        <select id="user-select">
+            <option value="">Выберите пользователя</option>
+        </select>
+        <div id="new-chat-error" class="error"></div>
+        <button id="create-chat-btn">Создать</button>
+        <button id="close-chat-btn">Отмена</button>
+    </div>
+</div>
+
+<div class="chat-container">
+    <!-- Левая боковая панель -->
+    <div class="sidebar">
+        <div class="search-panel">Поиск</div>
+        <ul id="chat-list" class="chat-list"></ul>
+        <button id="add-chat-button" class="add-chat-button"></button>
+    </div>
+
+    <!-- Разделитель панелей -->
+    <div class="resizer"></div> 
+
+    <!-- Правая панель чата -->
+    <div class="chat-window hidden">
+        <!-- Данные чата -->
+        <div class="chat-data">
+            <div class="chat-header">
+                <span id="current-chat-user">Выберите чат</span>
+            </div>
+        </div>
+        
+        <!-- Сообщения -->
+        <div class="message-panel">
+            <div id="messages"></div>
+        </div>
+        
+        <!-- Панель ввода -->
+        <div class="input-panel">
+            <form id="form">
+                <textarea id="input" rows="1" placeholder="Напишите сообщение..."></textarea>
+                <button type="submit">Отправить</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script src="/static/js/app.js"></script>
+<!-- Обработчик изменения размера -->
+<script>
+    // Скроллер панели чатов
+    const resizer = document.querySelector('.resizer');
+    const panel = document.querySelector('.sidebar');
+
+    resizer.addEventListener('mousedown', (e) => {
+      document.addEventListener('mousemove', resize);
+      document.addEventListener('mouseup', stopResize);
+    });
+
+    function resize(e) {
+      panel.style.width = e.pageX + 'px';
+    }
+
+    function stopResize() {
+      document.removeEventListener('mousemove', resize);
+      document.removeEventListener('mouseup', stopResize);
+    }
+</script>
+
+</body>
+</html>

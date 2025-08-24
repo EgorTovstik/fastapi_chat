@@ -1,0 +1,301 @@
+/* Общий стиль */
+body {
+    font-family: Montserrat, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: #C5C5C5;
+}
+
+/* ЗАТЕМНЕНИЕ ФОНА */
+.overlay {
+  position: fixed;          /* перекрывает весь экран */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7); /* полупрозрачное затемнение */
+  display: flex;            /* чтобы центрировать окно */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.overlay.hidden {
+  display: none;
+}
+
+/* ОКНО АВТОРИЗАЦИИ */
+#login {
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* расстояние между элементами */
+}
+
+/* Поля ввода */
+#login input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+}
+
+/* Кнопки */
+#login button {
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  background: #1EAAA1;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#login button:hover {
+  background: #FDC36D;
+}
+
+.modal {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+}
+
+.error {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+/* Контейнер чата */
+.chat-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+/* Левая панель (контейнер для поиска и чатов) */
+.sidebar {
+  position: relative;
+  width: 25%;
+  min-width: 20%;
+  max-width: 30%;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-right: 1px solid #C5C5C5;
+  overflow: hidden;
+  padding-bottom: 84px; /* = размер кнопки (60) + зазор (~24) */
+}
+
+/* Панель поиска */
+.search-panel {
+  padding: 25px;
+  border-bottom: 1px solid #C5C5C5;
+}
+
+/* Список чатов */
+.chat-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.chat-list li {
+  padding: 12px 15px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  transition: background 0.2s;
+}
+
+.chat-list li:hover {
+  background: #e9e9e9;
+}
+
+.chat-list li.active {
+  background: #415362;
+  color: #FDC36D;
+}
+
+/* Кнопка добавления чата */
+.add-chat-button {
+    position: absolute;
+    align-self: right;
+    right: 14px;
+    bottom: 14px;
+    width: 60px;
+    height: 60px;
+    border: none;
+    background: none;
+    padding: 0;
+    background-image: url('/static/images/add_chat_icon.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.add-chat-button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* Время рядом с сообщением */
+.msg-time {
+    font-size: 0.7em;
+    color: #FDC36D;
+    margin-top: 5px;
+    align-self: flex-end; /* для отправленных сообщений время справа */
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Панель чата */
+.chat-window {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #C5C5C5;
+    box-sizing: border-box;
+}
+
+
+/* скрываем, пока чат не выбран */
+.chat-window.hidden {
+    display: none;
+}
+
+/* Данные чата */
+.chat-data {
+    padding: 24px;
+    border-bottom: 1px solid #C5C5C5;
+    background: #fff;
+}
+
+.chat-header {
+    color: #FDC36D;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+/* Сообщения */
+.message-panel {
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* <-- занимает всё оставшееся место */
+    overflow-y: auto;
+    padding: 10px;
+    background: #fafafa;
+    border-bottom: 1px solid #C5C5C5;
+}
+
+#messages {
+    display: flex;
+    flex-direction: column; /* чтобы все сообщения шли друг под другом */
+}
+
+/* Сообщения в чате */
+.message-sent, .message-received {
+    display: inline-block;
+    flex-direction: column; /* текст сверху, время снизу */
+    max-width: 60%; /* ограничиваем ширину блока под текст */
+    word-wrap: break-word;
+    margin: 5px 0;
+    padding: 8px 12px;
+    border-radius: 12px;
+}
+
+.message-sent {
+    background: #415362;
+    color: #FDC36D;
+    align-self: flex-end;
+    text-align: right;
+    border-radius: 12px 12px 0 12px;
+}
+
+.message-received {
+    background: #ffffff;
+    color: #000;
+    align-self: flex-start;
+    text-align: left;
+    border-radius: 12px 12px 12px 0;
+}
+
+.message-received .msg-time {
+    color: #000;
+}
+
+.message-content {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Панель ввода */
+.input-panel {
+    padding: 10px 15px;
+    background: #fff;
+    border-top: 1px solid #C5C5C5;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Форма */
+#form {
+    display: flex;
+    align-items: flex-end;   /* выравнивание кнопки по нижней границе textarea */
+    width: 100%;
+}
+
+/* Поле ввода */
+#input {
+    flex: 1;
+    padding: 12px 12px 12px 15px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    background: transparent;
+    resize: none;          /* запрещаем ручное изменение */
+    overflow-y: auto;      /* появляется скролл при переполнении */
+    white-space: pre-wrap; /* перенос строк */
+    word-wrap: break-word; /* перенос длинных слов */
+    max-height: 15vh;      /* максимум — 15% высоты окна */
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+/* Кнопка отправки */
+#form button {
+    padding: 12px 20px;
+    border: none;
+    background: #1EAAA1;
+    color: #000000;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-left: 10px;
+    font-size: 14px;
+    flex-shrink: 0;       /* не сжимать кнопку при растягивании textarea */
+}
+
+#form button:hover {
+    background: #1EAAA1;
+}
+
+
+
+.resizer {
+  width: 2px;
+  cursor: col-resize; /* курсор изменения ширины */
+  height: 100%;
+}
