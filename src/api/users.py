@@ -1,9 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from typing import Optional
 
 # Импорты из проекта
+from src.auth import auth
 from src.database import get_db
 from src.models.users import User as userModel
 from src.schemas.users import *
@@ -56,9 +57,9 @@ async def get_all_users(
 )
 async def login(
     creds: UserLogin,
+    response: Response,
     db: AsyncSession = Depends(get_db)
 ):
-    from src.main import auth
     if len(creds.username) == 0 or len(creds.password) == 0:
         raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
@@ -82,8 +83,17 @@ async def login(
             )
         
         token = auth.create_access_token(uid=existing_user.username)
+        auth.set_access_cookies(
+            response=response,
+            token=token
+        )
         
-        return {"access_token": token}
+        return {
+            "access_token": token,
+            "message": "Успешный вход в систему",
+            "user_id": existing_user.id,
+            "username": existing_user.username
+            }
 
 
     except Exception as e:
